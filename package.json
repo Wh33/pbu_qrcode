@@ -1,7 +1,11 @@
 {
   "name": "pbu_qrcode",
   "version": "1.0.3",
-  "description": "",
+  "description": "二维码生成并下载",
+  "repository": {   
+    "type": "git",
+    "url": "https://github.com/Wh33/pbu_qrcode.git"
+  },
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
