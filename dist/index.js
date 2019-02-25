@@ -141,11 +141,9 @@ var QRCode = function (_React$Component) {
                     image.setAttribute("crossOrigin", 'Anonymous');
                     ctx.drawImage(image, dx, dy, dwidth, dheight);
                     URL = canvas.toDataURL("image/png"); //转换到url地址
-                    self.props.addUrl(URL); //回传生成的二维码下载地址
                 };
             } else {
                 URL = canvas.toDataURL("image/png"); //转换到url地址
-                self.props.addUrl(URL); //回传生成的二维码下载地址
             }
         }
 
