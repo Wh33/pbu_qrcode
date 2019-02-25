@@ -34,7 +34,7 @@ QRCode.propTypes = {
     size: PropTypes.number,//二维码大小
     bgColor: PropTypes.string,//背景颜色
     fgColor: PropTypes.string,//内容颜色
-    logo: PropTypes.string,//logo地址
+    logo: PropTypes.string,//logo地址（使用网络图片需要解决跨域问题）
     logoWidth: PropTypes.number,//logo宽度
     logoHeight: PropTypes.number,//logo高度
     addUrl: PropTypes.func,//生成图片下载地址
