@@ -144,28 +144,31 @@ class QRCode extends React.Component {
         var image = new Image;
         // 创建画布
         var canvas = document.createElement('canvas');
+
         var context = canvas.getContext('2d');
+        var scale = (window.devicePixelRatio || 1) / getBackingStorePixelRatio(context);
+        var self = this;
         image.src =  URL
         // 临时图片加载
         image.onload = function(){
         // 图片尺寸
-        var img_w = image.naturalWidth;
-        var img_h = image.naturalHeight;
+        // var img_w = image.naturalWidth;
+        // var img_h = image.naturalHeight;
         // 缩略后尺寸
-        var dimg_w;
-        var dimg_h;
-        // 计算缩略尺寸
-        dimg_w = width;
-        dimg_h = Math.ceil(dimg_w*img_h/img_w);
-        if(dimg_h>height){
-            dimg_h = height;
-            dimg_w = Math.ceil(dimg_h*img_w/img_h);
-        }
+        // var dimg_w;
+        // var dimg_h;
+        // // 计算缩略尺寸
+        // dimg_w = width;
+        // dimg_h = Math.ceil(dimg_w*img_h/img_w);
+        // if(dimg_h>height){
+        //     dimg_h = height;
+        //     dimg_w = Math.ceil(dimg_h*img_w/img_h);
+        // }
             // 定义画布尺寸
-            canvas.width = dimg_w;
-            canvas.height = dimg_h;
+            canvas.width = width*scale;
+            canvas.height = height*scale;
             // 在画布上按缩略尺寸画图
-            context.drawImage(image, 0, 0, dimg_w, dimg_h);
+            context.drawImage(image, 0, 0, self.props.size, self.props.size);
             // 获取画布数据
             var imgdata = canvas.toDataURL("image/png");
             // 将画布数据回调返回
