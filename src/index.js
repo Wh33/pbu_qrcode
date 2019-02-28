@@ -81,7 +81,6 @@ class QRCode extends React.Component {
     update(canvas,width,height,callback) {
         var value = this.utf16to8(this.props.value);
         var qrcode = qr(value);
-        // var canvas = getDOMNode(this.refs.canvas);
         var ctx = canvas.getContext('2d');
         var cells = qrcode.modules;
         var tileW = width / cells.length;
@@ -222,14 +221,14 @@ class QRCode extends React.Component {
                 <button
                     style={lBStyle}
                     type="button"
-                    onClick={this.onClickDownLoad.bind(this,downLoadLargerWidth,downLoadLargerHeight)}
+                    onClick={this.onClickDownLoad.bind(this,downLoadLargerWidth/2,downLoadLargerHeight/2)}
                 >
                     {lBText}
                 </button>
                 <button
                     style={smBStyle}
                     type="button"
-                    onClick={this.onClickDownLoad.bind(this,downLoadSmallWidth,downLoadSmallHeight)}
+                    onClick={this.onClickDownLoad.bind(this,downLoadSmallWidth/2,downLoadSmallHeight/2)}
                 >
                     {smBText}
                 </button>
