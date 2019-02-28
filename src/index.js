@@ -6,6 +6,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import qr from 'qr.js';
 import ReactDOM from 'react-dom';
+import {Button} from 'antd';
+
 var URL = '';
 function getBackingStorePixelRatio(ctx) {
     return (
@@ -218,20 +220,22 @@ class QRCode extends React.Component {
         if(isDownload){
             return <div>
                 <a id="downloadLink"></a>
-                <button
+                <Button
+                    type={"primary"}
                     style={lBStyle}
                     type="button"
                     onClick={this.onClickDownLoad.bind(this,downLoadLargerWidth/2,downLoadLargerHeight/2)}
                 >
                     {lBText}
-                </button>
-                <button
+                </Button>
+                <Button
+                    type={"primary"}
                     style={smBStyle}
                     type="button"
                     onClick={this.onClickDownLoad.bind(this,downLoadSmallWidth/2,downLoadSmallHeight/2)}
                 >
                     {smBText}
-                </button>
+                </Button>
             </div>
         }
     }
