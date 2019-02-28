@@ -22,7 +22,11 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _antd = require('antd');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -268,26 +272,26 @@ var QRCode = function (_React$Component) {
                 smBStyle = _props.smBStyle;
 
             if (isDownload) {
+                var _React$createElement, _React$createElement2;
+
                 return _react2.default.createElement(
                     'div',
                     null,
                     _react2.default.createElement('a', { id: 'downloadLink' }),
                     _react2.default.createElement(
-                        'button',
-                        {
-                            style: lBStyle,
-                            type: 'button',
-                            onClick: this.onClickDownLoad.bind(this, downLoadLargerWidth / 2, downLoadLargerHeight / 2)
-                        },
+                        _antd.Button,
+                        (_React$createElement = {
+                            type: "primary",
+                            style: lBStyle
+                        }, _defineProperty(_React$createElement, 'type', 'button'), _defineProperty(_React$createElement, 'onClick', this.onClickDownLoad.bind(this, downLoadLargerWidth / 2, downLoadLargerHeight / 2)), _React$createElement),
                         lBText
                     ),
                     _react2.default.createElement(
-                        'button',
-                        {
-                            style: smBStyle,
-                            type: 'button',
-                            onClick: this.onClickDownLoad.bind(this, downLoadSmallWidth / 2, downLoadSmallHeight / 2)
-                        },
+                        _antd.Button,
+                        (_React$createElement2 = {
+                            type: "primary",
+                            style: smBStyle
+                        }, _defineProperty(_React$createElement2, 'type', 'button'), _defineProperty(_React$createElement2, 'onClick', this.onClickDownLoad.bind(this, downLoadSmallWidth / 2, downLoadSmallHeight / 2)), _React$createElement2),
                         smBText
                     )
                 );
