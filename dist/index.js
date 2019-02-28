@@ -75,12 +75,18 @@ var QRCode = function (_React$Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.update();
+            var canvas = getDOMNode(this.refs.canvas);
+            var width = this.props.size;
+            var height = this.props.size;
+            this.update(canvas, width, height);
         }
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
-            this.update();
+            var canvas = getDOMNode(this.refs.canvas);
+            var width = this.props.size;
+            var height = this.props.size;
+            this.update(canvas, width, height);
         }
     }, {
         key: 'utf16to8',
@@ -105,16 +111,17 @@ var QRCode = function (_React$Component) {
         }
     }, {
         key: 'update',
-        value: function update() {
+        value: function update(canvas, width, height, callback) {
             var value = this.utf16to8(this.props.value);
             var qrcode = (0, _qr2.default)(value);
-            var canvas = getDOMNode(this.refs.canvas);
+            // var canvas = getDOMNode(this.refs.canvas);
             var ctx = canvas.getContext('2d');
             var cells = qrcode.modules;
-            var tileW = this.props.size / cells.length;
-            var tileH = this.props.size / cells.length;
+            var tileW = width / cells.length;
+            var tileH = height / cells.length;
             var scale = (window.devicePixelRatio || 1) / getBackingStorePixelRatio(ctx);
-            canvas.height = canvas.width = this.props.size * scale;
+            canvas.height = height * scale;
+            canvas.width = width * scale;
             ctx.scale(scale, scale);
             cells.forEach(function (row, rdx) {
                 row.forEach(function (cell, cdx) {
@@ -127,23 +134,29 @@ var QRCode = function (_React$Component) {
             if (this.props.logo) {
                 //绘制中间logo
                 var self = this;
-                var size = this.props.size;
+                var size = width;
                 var image = document.createElement('img');
                 image.src = this.props.logo;
                 image.onload = function () {
                     //图片加载完成后
                     var dwidth = self.props.logoWidth || size * 0.2;
                     var dheight = self.props.logoHeight || image.height / image.width * dwidth;
-                    var dx = (size - dwidth) / 2;
-                    var dy = (size - dheight) / 2;
+                    var dx = (size - dwidth * (width / self.props.size)) / 2;
+                    var dy = (size - dheight * (height / self.props.size)) / 2;
                     image.width = dwidth;
                     image.height = dheight;
                     image.setAttribute("crossOrigin", 'Anonymous');
-                    ctx.drawImage(image, dx, dy, dwidth, dheight);
+                    ctx.drawImage(image, dx, dy, dwidth * (width / self.props.size), dheight * (height / self.props.size));
                     URL = canvas.toDataURL("image/png"); //转换到url地址
+                    if (typeof callback === 'function') {
+                        callback(URL);
+                    }
                 };
             } else {
                 URL = canvas.toDataURL("image/png"); //转换到url地址
+                if (typeof callback === 'function') {
+                    callback(URL);
+                }
             }
         }
 
@@ -170,7 +183,8 @@ var QRCode = function (_React$Component) {
         value: function onClickDownLoad(width, height) {
             var _this2 = this;
 
-            this.resize(width, height, function (imgdata) {
+            var canvas = document.createElement('canvas');
+            this.update(canvas, width, height, function (imgdata) {
                 _this2.createDownload(imgdata);
             });
         }
@@ -185,44 +199,44 @@ var QRCode = function (_React$Component) {
 
     }, {
         key: 'resize',
-        value: function resize(width, height, callback) {
-            // 创建临时图片对象
-            var image = new Image();
-            // 创建画布
-            var canvas = document.createElement('canvas');
+        value: function resize(width, height, callback) {}
+        // // 创建临时图片对象
+        // var image = new Image;
+        // // 创建画布
+        // var canvas = document.createElement('canvas');
 
-            var context = canvas.getContext('2d');
-            var scale = (window.devicePixelRatio || 1) / getBackingStorePixelRatio(context);
-            var self = this;
-            image.src = URL;
-            // 临时图片加载
-            image.onload = function () {
-                // 图片尺寸
-                // var img_w = image.naturalWidth;
-                // var img_h = image.naturalHeight;
-                // 缩略后尺寸
-                // var dimg_w;
-                // var dimg_h;
-                // // 计算缩略尺寸
-                // dimg_w = width;
-                // dimg_h = Math.ceil(dimg_w*img_h/img_w);
-                // if(dimg_h>height){
-                //     dimg_h = height;
-                //     dimg_w = Math.ceil(dimg_h*img_w/img_h);
-                // }
-                // 定义画布尺寸
-                canvas.width = width * scale;
-                canvas.height = height * scale;
-                // 在画布上按缩略尺寸画图
-                context.drawImage(image, 0, 0, self.props.size, self.props.size);
-                // 获取画布数据
-                var imgdata = canvas.toDataURL("image/png");
-                // 将画布数据回调返回
-                if (typeof callback === 'function') {
-                    callback(imgdata);
-                }
-            };
-        }
+        // var context = canvas.getContext('2d');
+        // var scale = (window.devicePixelRatio || 1) / getBackingStorePixelRatio(context);
+        // var self = this;
+        // image.src =  URL
+        // // 临时图片加载
+        // image.onload = function(){
+        // // 图片尺寸
+        // // var img_w = image.naturalWidth;
+        // // var img_h = image.naturalHeight;
+        // // 缩略后尺寸
+        // // var dimg_w;
+        // // var dimg_h;
+        // // // 计算缩略尺寸
+        // // dimg_w = width;
+        // // dimg_h = Math.ceil(dimg_w*img_h/img_w);
+        // // if(dimg_h>height){
+        // //     dimg_h = height;
+        // //     dimg_w = Math.ceil(dimg_h*img_w/img_h);
+        // // }
+        //     // 定义画布尺寸
+        //     canvas.width = width*scale;
+        //     canvas.height = height*scale;
+        //     // 在画布上按缩略尺寸画图
+        //     context.drawImage(image, 0, 0, self.props.size, self.props.size);
+        //     // 获取画布数据
+        //     var imgdata = canvas.toDataURL("image/png");
+        //     // 将画布数据回调返回
+        //     if(typeof(callback)==='function'){
+        //         callback(imgdata);
+        //     }
+        // }
+
 
         //创建一个canvas节点
 
@@ -321,10 +335,10 @@ QRCode.defaultProps = {
     fgColor: '#000000',
     value: 'https://login.seentao.com',
     isDownload: true,
-    downLoadLargerWidth: 300,
-    downLoadLargerHeight: 300,
-    downLoadSmallWidth: 100,
-    downLoadSmallHeight: 100,
+    downLoadLargerWidth: 1000,
+    downLoadLargerHeight: 1000,
+    downLoadSmallWidth: 300,
+    downLoadSmallHeight: 300,
     lBText: 'larger',
     smBText: 'small'
     // lBStyle: {width:100,height:30,display:'block'},
