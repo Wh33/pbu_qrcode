@@ -114,7 +114,6 @@ var QRCode = function (_React$Component) {
         value: function update(canvas, width, height, callback) {
             var value = this.utf16to8(this.props.value);
             var qrcode = (0, _qr2.default)(value);
-            // var canvas = getDOMNode(this.refs.canvas);
             var ctx = canvas.getContext('2d');
             var cells = qrcode.modules;
             var tileW = width / cells.length;
@@ -278,7 +277,7 @@ var QRCode = function (_React$Component) {
                         {
                             style: lBStyle,
                             type: 'button',
-                            onClick: this.onClickDownLoad.bind(this, downLoadLargerWidth, downLoadLargerHeight)
+                            onClick: this.onClickDownLoad.bind(this, downLoadLargerWidth / 2, downLoadLargerHeight / 2)
                         },
                         lBText
                     ),
@@ -287,7 +286,7 @@ var QRCode = function (_React$Component) {
                         {
                             style: smBStyle,
                             type: 'button',
-                            onClick: this.onClickDownLoad.bind(this, downLoadSmallWidth, downLoadSmallHeight)
+                            onClick: this.onClickDownLoad.bind(this, downLoadSmallWidth / 2, downLoadSmallHeight / 2)
                         },
                         smBText
                     )
