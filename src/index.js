@@ -80,7 +80,7 @@ class QRCode extends React.Component {
         return out;
     }
 
-    update(canvas,width,height,callback,isSmall) {
+    update(canvas,width,height,isSmall,callback) {
         var value = this.utf16to8(this.props.value);
         var qrcode = qr(value);
         var ctx = canvas.getContext('2d');
@@ -143,7 +143,7 @@ class QRCode extends React.Component {
      */
     onClickDownLoad (width,height,isSmall){
         var canvas = document.createElement('canvas');
-        this.update(canvas,width,height,(imgdata)=>{this.createDownload(imgdata),isSmall})
+        this.update(canvas,width,height,isSmall,(imgdata)=>{this.createDownload(imgdata)})
     }
 
 
