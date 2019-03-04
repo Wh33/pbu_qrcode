@@ -115,7 +115,7 @@ var QRCode = function (_React$Component) {
         }
     }, {
         key: 'update',
-        value: function update(canvas, width, height, callback, isSmall) {
+        value: function update(canvas, width, height, isSmall, callback) {
             var value = this.utf16to8(this.props.value);
             var qrcode = (0, _qr2.default)(value);
             var ctx = canvas.getContext('2d');
@@ -187,8 +187,8 @@ var QRCode = function (_React$Component) {
             var _this2 = this;
 
             var canvas = document.createElement('canvas');
-            this.update(canvas, width, height, function (imgdata) {
-                _this2.createDownload(imgdata), isSmall;
+            this.update(canvas, width, height, isSmall, function (imgdata) {
+                _this2.createDownload(imgdata);
             });
         }
 
