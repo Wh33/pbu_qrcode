@@ -183,7 +183,7 @@ var QRCode = function (_React$Component) {
 
     }, {
         key: 'onClickDownLoad',
-        value: function onClickDownLoad(width, height) {
+        value: function onClickDownLoad(width, height, isSmall) {
             var _this2 = this;
 
             var canvas = document.createElement('canvas');
