@@ -50,14 +50,14 @@ class QRCode extends React.Component {
         var canvas = getDOMNode(this.refs.canvas);
         var width  = this.props.size;
         var height  = this.props.size;
-        this.update(canvas,width,height);
+        this.update(canvas,width,height,false);
     }
 
     componentDidUpdate() {
         var canvas = getDOMNode(this.refs.canvas);
         var width  = this.props.size;
         var height  = this.props.size;
-        this.update(canvas,width,height);
+        this.update(canvas,width,height,false);
     }
 
     utf16to8(str) {
@@ -80,7 +80,7 @@ class QRCode extends React.Component {
         return out;
     }
 
-    update(canvas,width,height,callback) {
+    update(canvas,width,height,callback,isSmall) {
         var value = this.utf16to8(this.props.value);
         var qrcode = qr(value);
         var ctx = canvas.getContext('2d');
@@ -99,7 +99,7 @@ class QRCode extends React.Component {
                 ctx.fillRect(Math.round(cdx * tileW), Math.round(rdx * tileH), w, h);
             }, this);
         }, this);
-        if (this.props.logo) {//绘制中间logo
+        if (this.props.logo&&!isSmall) {//绘制中间logo
             var self = this
             var size = width;
             var image = document.createElement('img');
@@ -143,7 +143,7 @@ class QRCode extends React.Component {
      */
     onClickDownLoad (width,height){
         var canvas = document.createElement('canvas');
-        this.update(canvas,width,height,(imgdata)=>{this.createDownload(imgdata)})
+        this.update(canvas,width,height,(imgdata)=>{this.createDownload(imgdata),isSmall})
     }
 
 
@@ -224,7 +224,7 @@ class QRCode extends React.Component {
                     type={"primary"}
                     style={lBStyle}
                     type="button"
-                    onClick={this.onClickDownLoad.bind(this,downLoadLargerWidth/2,downLoadLargerHeight/2)}
+                    onClick={this.onClickDownLoad.bind(this,downLoadLargerWidth/2,downLoadLargerHeight/2,false)}
                 >
                     {lBText}
                 </Button>
@@ -232,7 +232,7 @@ class QRCode extends React.Component {
                     type={"primary"}
                     style={smBStyle}
                     type="button"
-                    onClick={this.onClickDownLoad.bind(this,downLoadSmallWidth/2,downLoadSmallHeight/2)}
+                    onClick={this.onClickDownLoad.bind(this,downLoadSmallWidth/2,downLoadSmallHeight/2,true)}
                 >
                     {smBText}
                 </Button>
