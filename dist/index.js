@@ -82,7 +82,7 @@ var QRCode = function (_React$Component) {
             var canvas = getDOMNode(this.refs.canvas);
             var width = this.props.size;
             var height = this.props.size;
-            this.update(canvas, width, height);
+            this.update(canvas, width, height, false);
         }
     }, {
         key: 'componentDidUpdate',
@@ -90,7 +90,7 @@ var QRCode = function (_React$Component) {
             var canvas = getDOMNode(this.refs.canvas);
             var width = this.props.size;
             var height = this.props.size;
-            this.update(canvas, width, height);
+            this.update(canvas, width, height, false);
         }
     }, {
         key: 'utf16to8',
@@ -115,7 +115,7 @@ var QRCode = function (_React$Component) {
         }
     }, {
         key: 'update',
-        value: function update(canvas, width, height, callback) {
+        value: function update(canvas, width, height, callback, isSmall) {
             var value = this.utf16to8(this.props.value);
             var qrcode = (0, _qr2.default)(value);
             var ctx = canvas.getContext('2d');
@@ -134,7 +134,7 @@ var QRCode = function (_React$Component) {
                     ctx.fillRect(Math.round(cdx * tileW), Math.round(rdx * tileH), w, h);
                 }, this);
             }, this);
-            if (this.props.logo) {
+            if (this.props.logo && !isSmall) {
                 //绘制中间logo
                 var self = this;
                 var size = width;
@@ -188,7 +188,7 @@ var QRCode = function (_React$Component) {
 
             var canvas = document.createElement('canvas');
             this.update(canvas, width, height, function (imgdata) {
-                _this2.createDownload(imgdata);
+                _this2.createDownload(imgdata), isSmall;
             });
         }
 
@@ -283,7 +283,7 @@ var QRCode = function (_React$Component) {
                         (_React$createElement = {
                             type: "primary",
                             style: lBStyle
-                        }, _defineProperty(_React$createElement, 'type', 'button'), _defineProperty(_React$createElement, 'onClick', this.onClickDownLoad.bind(this, downLoadLargerWidth / 2, downLoadLargerHeight / 2)), _React$createElement),
+                        }, _defineProperty(_React$createElement, 'type', 'button'), _defineProperty(_React$createElement, 'onClick', this.onClickDownLoad.bind(this, downLoadLargerWidth / 2, downLoadLargerHeight / 2, false)), _React$createElement),
                         lBText
                     ),
                     _react2.default.createElement(
@@ -291,7 +291,7 @@ var QRCode = function (_React$Component) {
                         (_React$createElement2 = {
                             type: "primary",
                             style: smBStyle
-                        }, _defineProperty(_React$createElement2, 'type', 'button'), _defineProperty(_React$createElement2, 'onClick', this.onClickDownLoad.bind(this, downLoadSmallWidth / 2, downLoadSmallHeight / 2)), _React$createElement2),
+                        }, _defineProperty(_React$createElement2, 'type', 'button'), _defineProperty(_React$createElement2, 'onClick', this.onClickDownLoad.bind(this, downLoadSmallWidth / 2, downLoadSmallHeight / 2, true)), _React$createElement2),
                         smBText
                     )
                 );
