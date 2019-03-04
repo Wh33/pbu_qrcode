@@ -141,7 +141,7 @@ class QRCode extends React.Component {
      * @param  {[type]} height [图片下载高度]
      * @return {[type]}        [description]
      */
-    onClickDownLoad (width,height){
+    onClickDownLoad (width,height,isSmall){
         var canvas = document.createElement('canvas');
         this.update(canvas,width,height,(imgdata)=>{this.createDownload(imgdata),isSmall})
     }
