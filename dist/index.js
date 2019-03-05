@@ -151,6 +151,7 @@ var QRCode = function (_React$Component) {
                     image.setAttribute("crossOrigin", 'Anonymous');
                     ctx.drawImage(image, dx, dy, dwidth * (width / self.props.size), dheight * (height / self.props.size));
                     URL = canvas.toDataURL("image/png"); //转换到url地址
+                    console.log('URLLOGO', URL);
                     if (typeof callback === 'function') {
                         callback(URL);
                     }
@@ -158,6 +159,7 @@ var QRCode = function (_React$Component) {
             } else {
                 URL = canvas.toDataURL("image/png"); //转换到url地址
                 if (typeof callback === 'function') {
+                    console.log('URL', URL);
                     callback(URL);
                 }
             }
