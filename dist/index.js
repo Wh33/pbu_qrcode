@@ -150,16 +150,22 @@ var QRCode = function (_React$Component) {
                     image.height = dheight;
                     image.setAttribute("crossOrigin", 'Anonymous');
                     ctx.drawImage(image, dx, dy, dwidth * (width / self.props.size), dheight * (height / self.props.size));
-                    URL = canvas.toDataURL("image/png"); //转换到url地址
-                    console.log('URLLOGO', URL);
+                    canvas.toBlob(function (blob) {
+                        URL = window.URL.createObjectURL(blob);
+                    });
+                    // URL = canvas.toDataURL("image/png");//转换到url地址
+                    console.log(URL);
                     if (typeof callback === 'function') {
                         callback(URL);
                     }
                 };
             } else {
-                URL = canvas.toDataURL("image/png"); //转换到url地址
+                // URL  = canvas.toDataURL("image/png");//转换到url地址
+                canvas.toBlob(function (blob) {
+                    URL = window.URL.createObjectURL(blob);
+                });
+                console.log(URL);
                 if (typeof callback === 'function') {
-                    console.log('URL', URL);
                     callback(URL);
                 }
             }
