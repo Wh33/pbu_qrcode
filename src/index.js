@@ -115,25 +115,26 @@ class QRCode extends React.Component {
                 ctx.drawImage(image, dx, dy, dwidth*(width/self.props.size), dheight*(height/self.props.size));
                 canvas.toBlob(function (blob) {
                     URL= window.URL.createObjectURL(blob)
+                    console.log(URL)
+                    if (typeof callback === 'function') {
+                        callback(URL);
+                    }
                 
-                })
+                },'image/jpg')
                 // URL = canvas.toDataURL("image/png");//转换到url地址
-                console.log(URL)
-                if (typeof callback === 'function') {
-                    callback(URL);
-                }
+
             }
 
         }else{
             // URL  = canvas.toDataURL("image/png");//转换到url地址
             canvas.toBlob(function (blob) {
                 URL= window.URL.createObjectURL(blob)
-            
-            })
-            console.log(URL)
-            if (typeof callback === 'function') {
-                callback(URL);
-            }
+                console.log(URL)
+                if (typeof callback === 'function') {
+                    callback(URL);
+                }
+            },'image/jpg')
+
         }
     }
 
@@ -234,7 +235,6 @@ class QRCode extends React.Component {
                 <Button
                     type={"primary"}
                     style={lBStyle}
-                    type="button"
                     onClick={this.onClickDownLoad.bind(this,downLoadLargerWidth/2,downLoadLargerHeight/2,false)}
                 >
                     {lBText}
@@ -242,7 +242,6 @@ class QRCode extends React.Component {
                 <Button
                     type={"primary"}
                     style={smBStyle}
-                    type="button"
                     onClick={this.onClickDownLoad.bind(this,downLoadSmallWidth/2,downLoadSmallHeight/2,true)}
                 >
                     {smBText}
