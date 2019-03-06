@@ -80,6 +80,9 @@ class QRCode extends React.Component {
         return out;
     }
 
+
+
+
     update(canvas,width,height,isSmall,callback) {
         var value = this.utf16to8(this.props.value);
         var qrcode = qr(value);
@@ -104,7 +107,7 @@ class QRCode extends React.Component {
             var size = width;
             var image = document.createElement('img');
             image.src = this.props.logo;
-            image.onload = function() {//图片加载完成后
+            if(image.complete){
                 var dwidth = self.props.logoWidth || size * 0.2;
                 var dheight = self.props.logoHeight || image.height / image.width * dwidth;
                 var dx = (size - dwidth*(width/self.props.size)) / 2;
@@ -113,27 +116,35 @@ class QRCode extends React.Component {
                 image.height = dheight;
                 image.setAttribute("crossOrigin",'Anonymous')
                 ctx.drawImage(image, dx, dy, dwidth*(width/self.props.size), dheight*(height/self.props.size));
-                canvas.toBlob(function (blob) {
-                    URL= window.URL.createObjectURL(blob)
-                    console.log(URL)
-                    if (typeof callback === 'function') {
-                        callback(URL);
-                    }
+                // canvas.toBlob(function (blob) {
+                //     URL= window.URL.createObjectURL(blob)
+                //     console.log(URL)
+                //     if (typeof callback === 'function') {
+                //         callback(URL);
+                //     }
                 
-                },'image/jpg')
-                // URL = canvas.toDataURL("image/png");//转换到url地址
-
-            }
-
-        }else{
-            // URL  = canvas.toDataURL("image/png");//转换到url地址
-            canvas.toBlob(function (blob) {
-                URL= window.URL.createObjectURL(blob)
-                console.log(URL)
+                // },'image/jpg')
+                URL= canvas.toDataURL("image/png");
                 if (typeof callback === 'function') {
                     callback(URL);
                 }
-            },'image/jpg')
+            }
+            // image.onload = function() {//图片加载完成后
+                
+            // }
+
+        }else{
+            URL= canvas.toDataURL("image/png");
+            if (typeof callback === 'function') {
+                callback(URL);
+            }
+            // canvas.toBlob(function (blob) {
+            //     URL= window.URL.createObjectURL(blob)
+            //     console.log(URL)
+            //     if (typeof callback === 'function') {
+            //         callback(URL);
+            //     }
+            // },'image/jpg')
 
         }
     }
@@ -146,6 +157,17 @@ class QRCode extends React.Component {
         downloadLink.click();
     }
 
+    onDownloadIE(imgdata){
+        var bstr = atob(imgdata.split(',')[1])
+        var n = bstr.length
+        var u8arr = new Uint8Array(n)
+        while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+        }
+        var blob = new Blob([u8arr])
+        window.navigator.msSaveOrOpenBlob(blob, '二维码' + '.' + 'png')
+    }
+
     /**
      * [onClickDownLoad 点击下载二维码]
      * @param  {[type]} width  [图片下载宽度]
@@ -154,8 +176,13 @@ class QRCode extends React.Component {
      */
     onClickDownLoad (width,height,isSmall){
         var canvas = document.createElement('canvas');
-        this.update(canvas,width,height,isSmall,(imgdata)=>{this.createDownload(imgdata)})
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            this.update(canvas,width,height,isSmall,(imgdata)=>{this.onDownloadIE(imgdata)})
+            
+        }else{
+            this.update(canvas,width,height,isSmall,(imgdata)=>{this.createDownload(imgdata)})
 
+        }
     }
 
 
