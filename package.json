@@ -1,6 +1,6 @@
 {
   "name": "pbu_qrcode",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "二维码生成并下载",
   "repository": {
     "type": "git",
