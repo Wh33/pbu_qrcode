@@ -107,31 +107,30 @@ class QRCode extends React.Component {
             var size = width;
             var image = document.createElement('img');
             image.src = this.props.logo;
-            if(image.complete){
-                var dwidth = self.props.logoWidth || size * 0.2;
-                var dheight = self.props.logoHeight || image.height / image.width * dwidth;
-                var dx = (size - dwidth*(width/self.props.size)) / 2;
-                var dy = (size - dheight*(height/self.props.size)) / 2;
-                image.width = dwidth;
-                image.height = dheight;
-                image.setAttribute("crossOrigin",'Anonymous')
-                ctx.drawImage(image, dx, dy, dwidth*(width/self.props.size), dheight*(height/self.props.size));
-                // canvas.toBlob(function (blob) {
-                //     URL= window.URL.createObjectURL(blob)
-                //     console.log(URL)
-                //     if (typeof callback === 'function') {
-                //         callback(URL);
-                //     }
-                
-                // },'image/jpg')
-                URL= canvas.toDataURL("image/png");
-                if (typeof callback === 'function') {
-                    callback(URL);
+            var timer = setInterval(function() {
+                if (image.complete) {//图片加载完成后
+                    var dwidth = self.props.logoWidth || size * 0.2;
+                    var dheight = self.props.logoHeight || image.height / image.width * dwidth;
+                    var dx = (size - dwidth * (width / self.props.size)) / 2;
+                    var dy = (size - dheight * (height / self.props.size)) / 2;
+                    image.width = dwidth;
+                    image.height = dheight;
+                    image.setAttribute("crossOrigin", 'Anonymous');
+                    ctx.drawImage(image, dx, dy, dwidth * (width / self.props.size), dheight * (height / self.props.size));
+                    // canvas.toBlob(function (blob) {
+                    //     URL= window.URL.createObjectURL(blob)
+                    //     console.log(URL)
+                    //     if (typeof callback === 'function') {
+                    //         callback(URL);
+                    //     }
+                    // },'image/jpg')
+                    URL = canvas.toDataURL("image/png");
+                    if (typeof callback === 'function') {
+                        callback(URL);
+                    }
+                    clearInterval(timer)
                 }
-            }
-            // image.onload = function() {//图片加载完成后
-                
-            // }
+            }, 50)
 
         }else{
             URL= canvas.toDataURL("image/png");
