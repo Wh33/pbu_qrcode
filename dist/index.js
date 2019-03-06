@@ -26,8 +26,6 @@ var _antd = require('antd');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -152,22 +150,22 @@ var QRCode = function (_React$Component) {
                     ctx.drawImage(image, dx, dy, dwidth * (width / self.props.size), dheight * (height / self.props.size));
                     canvas.toBlob(function (blob) {
                         URL = window.URL.createObjectURL(blob);
-                    });
+                        console.log(URL);
+                        if (typeof callback === 'function') {
+                            callback(URL);
+                        }
+                    }, 'image/jpg');
                     // URL = canvas.toDataURL("image/png");//转换到url地址
-                    console.log(URL);
-                    if (typeof callback === 'function') {
-                        callback(URL);
-                    }
                 };
             } else {
                 // URL  = canvas.toDataURL("image/png");//转换到url地址
                 canvas.toBlob(function (blob) {
                     URL = window.URL.createObjectURL(blob);
-                });
-                console.log(URL);
-                if (typeof callback === 'function') {
-                    callback(URL);
-                }
+                    console.log(URL);
+                    if (typeof callback === 'function') {
+                        callback(URL);
+                    }
+                }, 'image/jpg');
             }
         }
 
@@ -280,26 +278,26 @@ var QRCode = function (_React$Component) {
                 smBStyle = _props.smBStyle;
 
             if (isDownload) {
-                var _React$createElement, _React$createElement2;
-
                 return _react2.default.createElement(
                     'div',
                     null,
                     _react2.default.createElement('a', { id: 'downloadLink' }),
                     _react2.default.createElement(
                         _antd.Button,
-                        (_React$createElement = {
+                        {
                             type: "primary",
-                            style: lBStyle
-                        }, _defineProperty(_React$createElement, 'type', 'button'), _defineProperty(_React$createElement, 'onClick', this.onClickDownLoad.bind(this, downLoadLargerWidth / 2, downLoadLargerHeight / 2, false)), _React$createElement),
+                            style: lBStyle,
+                            onClick: this.onClickDownLoad.bind(this, downLoadLargerWidth / 2, downLoadLargerHeight / 2, false)
+                        },
                         lBText
                     ),
                     _react2.default.createElement(
                         _antd.Button,
-                        (_React$createElement2 = {
+                        {
                             type: "primary",
-                            style: smBStyle
-                        }, _defineProperty(_React$createElement2, 'type', 'button'), _defineProperty(_React$createElement2, 'onClick', this.onClickDownLoad.bind(this, downLoadSmallWidth / 2, downLoadSmallHeight / 2, true)), _React$createElement2),
+                            style: smBStyle,
+                            onClick: this.onClickDownLoad.bind(this, downLoadSmallWidth / 2, downLoadSmallHeight / 2, true)
+                        },
                         smBText
                     )
                 );
