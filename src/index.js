@@ -152,7 +152,7 @@ class QRCode extends React.Component {
     createDownload (imgdata){
         var downloadLink = document.getElementById('downloadLink');
         downloadLink.setAttribute('href', imgdata);
-        downloadLink.setAttribute('download', '二维码.png');
+        downloadLink.setAttribute('download', `${this.props.downloadName }.png`);
         downloadLink.click();
     }
 
@@ -164,7 +164,7 @@ class QRCode extends React.Component {
         u8arr[n] = bstr.charCodeAt(n)
         }
         var blob = new Blob([u8arr])
-        window.navigator.msSaveOrOpenBlob(blob, '二维码' + '.' + 'png')
+        window.navigator.msSaveOrOpenBlob(blob, `${this.props.downloadName }.png`)
     }
 
     /**
@@ -306,6 +306,7 @@ QRCode.propTypes = {
     smBText: PropTypes.string,//小图下载按钮文案 
     lBStyle: PropTypes.object,//大图下载按样式
     smBStyle: PropTypes.object,//小图下载按钮样式
+    downloadName: PropTypes.string,//下载文件名称
 };
 
 QRCode.defaultProps = {
@@ -320,6 +321,7 @@ QRCode.defaultProps = {
     downLoadSmallHeight: 300,
     lBText: 'larger',
     smBText: 'small',
+    downloadName: '二维码'
     // lBStyle: {width:100,height:30,display:'block'},
     // smBStyle: {width:100,height:30,display:'block'},
 };
