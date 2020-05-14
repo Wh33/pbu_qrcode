@@ -120,7 +120,7 @@ var QRCode = function (_React$Component) {
             var cells = qrcode.modules;
             var tileW = width / cells.length;
             var tileH = height / cells.length;
-            var scale = (window.devicePixelRatio || 1) / getBackingStorePixelRatio(ctx);
+            var scale = (2 || 1) / getBackingStorePixelRatio(ctx);
             canvas.height = height * scale;
             canvas.width = width * scale;
             ctx.scale(scale, scale);
@@ -185,7 +185,7 @@ var QRCode = function (_React$Component) {
         value: function createDownload(imgdata) {
             var downloadLink = document.getElementById('downloadLink');
             downloadLink.setAttribute('href', imgdata);
-            downloadLink.setAttribute('download', '二维码.png');
+            downloadLink.setAttribute('download', this.props.downloadName + '.png');
             downloadLink.click();
         }
     }, {
@@ -198,7 +198,7 @@ var QRCode = function (_React$Component) {
                 u8arr[n] = bstr.charCodeAt(n);
             }
             var blob = new Blob([u8arr]);
-            window.navigator.msSaveOrOpenBlob(blob, '二维码' + '.' + 'png');
+            window.navigator.msSaveOrOpenBlob(blob, this.props.downloadName + '.png');
         }
 
         /**
@@ -362,7 +362,8 @@ QRCode.propTypes = {
     lBText: _propTypes2.default.string, //大图下载按钮文案
     smBText: _propTypes2.default.string, //小图下载按钮文案 
     lBStyle: _propTypes2.default.object, //大图下载按样式
-    smBStyle: _propTypes2.default.object //小图下载按钮样式
+    smBStyle: _propTypes2.default.object, //小图下载按钮样式
+    downloadName: _propTypes2.default.string //下载文件名称
 };
 
 QRCode.defaultProps = {
@@ -376,7 +377,8 @@ QRCode.defaultProps = {
     downLoadSmallWidth: 300,
     downLoadSmallHeight: 300,
     lBText: 'larger',
-    smBText: 'small'
+    smBText: 'small',
+    downloadName: '二维码'
     // lBStyle: {width:100,height:30,display:'block'},
     // smBStyle: {width:100,height:30,display:'block'},
 };
